@@ -31,7 +31,7 @@ ELSE (WIN32)
 ENDIF (WIN32)
 
 SET ( LOG4CPP_LIBRARY_NAME "log4cpp" )
-SET ( LOG4CPP_LIBRARY_STATIC_NAME "log4cpp-static" )
+SET ( LOG4CPP_LIBRARY_STATIC_NAME "log4cpp_static" )
 
 SET ( SOURCE_FILES
   src/Appender.cpp
