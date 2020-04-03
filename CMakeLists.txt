@@ -30,9 +30,10 @@ ELSE (WIN32)
   ENDIF (APPLE)
 ENDIF (WIN32)
 
-SET ( LOG4CPP_LIBRARY_NAME "innoaus-log4cpp" )
+SET ( LOG4CPP_LIBRARY_NAME "log4cpp" )
+SET ( LOG4CPP_LIBRARY_STATIC_NAME "log4cpp-static" )
 
-ADD_LIBRARY ( ${LOG4CPP_LIBRARY_NAME} SHARED
+SET ( SOURCE_FILES
   src/Appender.cpp
   src/AppenderSkeleton.cpp
   src/AppendersFactory.cpp
@@ -81,6 +82,14 @@ ADD_LIBRARY ( ${LOG4CPP_LIBRARY_NAME} SHARED
   src/PThreads.cpp
   src/PortabilityImpl.cpp
   src/AbortAppender.cpp
+)
+
+ADD_LIBRARY ( ${LOG4CPP_LIBRARY_NAME} SHARED
+  ${SOURCE_FILES}
+)
+
+ADD_LIBRARY ( ${LOG4CPP_LIBRARY_NAME}-static STATIC
+  ${SOURCE_FILES}
 )
 
 IF (WIN32)
@@ -132,18 +141,18 @@ SET(prefix "${CMAKE_INSTALL_PREFIX}")
 SET(exec_prefix "\${prefix}")
 SET(log4cpp_cflags "")
 SET(log4cpp_libs "${LOG4CPP_LIBS}")
-SET(includedir "\${prefix}/include/orocos")
+SET(includedir "\${prefix}/include")
 SET(libdir "\${prefix}/lib")
-CONFIGURE_FILE(log4cpp.pc.in ${CMAKE_CURRENT_BINARY_DIR}/orocos-log4cpp.pc @ONLY)
+CONFIGURE_FILE(log4cpp.pc.in ${CMAKE_CURRENT_BINARY_DIR}/innoaus-log4cpp.pc @ONLY)
 
 INSTALL(
-  FILES ${CMAKE_CURRENT_BINARY_DIR}/orocos-log4cpp.pc
+  FILES ${CMAKE_CURRENT_BINARY_DIR}/innoaus-log4cpp.pc
   DESTINATION lib/pkgconfig
   )
 
 INSTALL (
   DIRECTORY include/log4cpp
-  DESTINATION include/orocos
+  DESTINATION include
   PATTERN "config.h.in" EXCLUDE
   PATTERN ".svn" EXCLUDE
   PATTERN "*.am" EXCLUDE
@@ -153,10 +162,15 @@ INSTALL (
 
 INSTALL (
   FILES ${CMAKE_CURRENT_BINARY_DIR}/include/log4cpp/config.h
-  DESTINATION include/orocos/log4cpp
+  DESTINATION include/log4cpp
   )
 
 INSTALL(TARGETS ${LOG4CPP_LIBRARY_NAME}
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+    RUNTIME DESTINATION lib)
+
+INSTALL(TARGETS ${LOG4CPP_LIBRARY_STATIC_NAME}
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib
     RUNTIME DESTINATION lib)
