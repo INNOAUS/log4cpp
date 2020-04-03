@@ -30,7 +30,7 @@ ELSE (WIN32)
   ENDIF (APPLE)
 ENDIF (WIN32)
 
-SET ( LOG4CPP_LIBRARY_NAME "orocos-log4cpp" )
+SET ( LOG4CPP_LIBRARY_NAME "innoaus-log4cpp" )
 
 ADD_LIBRARY ( ${LOG4CPP_LIBRARY_NAME} SHARED
   src/Appender.cpp
